@@ -1,0 +1,101 @@
+# fyne.io/fyne v1.2.4
+## explicit
+fyne.io/fyne
+fyne.io/fyne/app
+fyne.io/fyne/canvas
+fyne.io/fyne/driver/desktop
+fyne.io/fyne/driver/mobile
+fyne.io/fyne/internal
+fyne.io/fyne/internal/app
+fyne.io/fyne/internal/cache
+fyne.io/fyne/internal/driver
+fyne.io/fyne/internal/driver/glfw
+fyne.io/fyne/internal/driver/gomobile
+fyne.io/fyne/internal/painter
+fyne.io/fyne/internal/painter/gl
+fyne.io/fyne/internal/painter/software
+fyne.io/fyne/layout
+fyne.io/fyne/test
+fyne.io/fyne/theme
+fyne.io/fyne/widget
+# github.com/Masterminds/semver v1.5.0
+## explicit
+# github.com/Masterminds/vcs v1.13.1
+## explicit
+# github.com/armon/go-radix v1.0.0
+## explicit
+# github.com/boltdb/bolt v1.3.1
+## explicit
+# github.com/fsnotify/fsnotify v1.4.7
+github.com/fsnotify/fsnotify
+# github.com/fyne-io/mobile v0.0.1
+github.com/fyne-io/mobile/app
+github.com/fyne-io/mobile/app/internal/callfn
+github.com/fyne-io/mobile/event/key
+github.com/fyne-io/mobile/event/lifecycle
+github.com/fyne-io/mobile/event/paint
+github.com/fyne-io/mobile/event/size
+github.com/fyne-io/mobile/event/touch
+github.com/fyne-io/mobile/exp/f32
+github.com/fyne-io/mobile/geom
+github.com/fyne-io/mobile/gl
+github.com/fyne-io/mobile/internal/mobileinit
+# github.com/go-gl/gl v0.0.0-20190320180904-bf2b1f2f34d7
+github.com/go-gl/gl/v3.1/gles2
+github.com/go-gl/gl/v3.2-core/gl
+# github.com/go-gl/glfw v0.0.0-20200420212212-258d9bec320e
+## explicit
+github.com/go-gl/glfw/v3.2/glfw
+# github.com/goki/freetype v0.0.0-20181231101311-fa8a33aabaff
+github.com/goki/freetype
+github.com/goki/freetype/raster
+github.com/goki/freetype/truetype
+# github.com/golang/protobuf v1.4.0
+## explicit
+# github.com/jmank88/nuts v0.4.0
+## explicit
+# github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
+github.com/nfnt/resize
+# github.com/nightlyone/lockfile v1.0.0
+## explicit
+# github.com/pelletier/go-toml v1.7.0
+## explicit
+# github.com/pkg/errors v0.9.1
+## explicit
+# github.com/sdboyer/constext v0.0.0-20170321163424-836a14457353
+## explicit
+# github.com/srwiley/oksvg v0.0.0-20200311192757-870daf9aa564
+github.com/srwiley/oksvg
+# github.com/srwiley/rasterx v0.0.0-20181219215540-696f7edb7a7e
+github.com/srwiley/rasterx
+# golang.org/x/image v0.0.0-20190802002840-cff245a6509b
+golang.org/x/image/colornames
+golang.org/x/image/font
+golang.org/x/image/math/fixed
+golang.org/x/image/vector
+# golang.org/x/net v0.0.0-20190620200207-3b0461eec859
+golang.org/x/net/html
+golang.org/x/net/html/atom
+golang.org/x/net/html/charset
+# golang.org/x/sync v0.0.0-20200317015054-43a5402ce75a
+## explicit
+# golang.org/x/sys v0.0.0-20200501145240-bc7a7d42d5c3
+## explicit
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
+# golang.org/x/text v0.3.0
+golang.org/x/text/encoding
+golang.org/x/text/encoding/charmap
+golang.org/x/text/encoding/htmlindex
+golang.org/x/text/encoding/internal
+golang.org/x/text/encoding/internal/identifier
+golang.org/x/text/encoding/japanese
+golang.org/x/text/encoding/korean
+golang.org/x/text/encoding/simplifiedchinese
+golang.org/x/text/encoding/traditionalchinese
+golang.org/x/text/encoding/unicode
+golang.org/x/text/internal/tag
+golang.org/x/text/internal/utf8internal
+golang.org/x/text/language
+golang.org/x/text/runes
+golang.org/x/text/transform
