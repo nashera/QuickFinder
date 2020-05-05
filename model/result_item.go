@@ -25,7 +25,7 @@ func CreateResultItem(path string, info os.FileInfo) *ResultItem {
 		Name:       info.Name(),
 		Modified:   info.ModTime(),
 		ResultType: resultType,
-		FullPath, path
+		FullPath:   path,
 	}
 	return &r
 }
