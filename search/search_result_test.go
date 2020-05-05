@@ -6,5 +6,5 @@ import (
 )
 
 func TestWalk(t *testing.T) {
-	filepath.Walk("Z:/G_Counseling/Report", walkFunc)
+	filepath.Walk("D:/project/QuickFinder", walkFunc)
 }

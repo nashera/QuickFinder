@@ -169,7 +169,7 @@ func SearchScreen() fyne.CanvasObject {
 
 	// horiz := widget.NewHScrollContainer(list)
 	vert := widget.NewVScrollContainer(list2)
-	vert
+	vert.SetMinSize(fyne.NewSize(400, 400))
 
 	return fyne.NewContainerWithLayout(layout.NewVBoxLayout(), entry, fyne.NewContainerWithLayout(layout.NewBorderLayout(nil, nil, nil, nil), vert))
 }

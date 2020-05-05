@@ -2,6 +2,7 @@ package cache
 
 import (
 	"database/sql"
+	"os"
 
 	"github.com/nashera/QuickFinder/search"
 )
@@ -42,5 +43,10 @@ func insertResult(dbPath string, result search.ResultItem) error {
 func queryResult(dbPath string, searchPattern string) error {
 	database, _ := sql.Open("sqlite3", dbPath)
 	_, _ = database.Query("SELECT id, name FROM search_result")
+	return nil
+}
+
+func DeleteDB(dbPath string) error {
+	_ = os.Remove(dbPath)
 	return nil
 }
