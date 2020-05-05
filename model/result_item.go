@@ -16,11 +16,14 @@ type ResultItem struct {
 func CreateResultItem(info os.FileInfo) *ResultItem {
 	var r ResultItem
 	if info.IsDir() {
-		var resultType = "Folder"
+		var resultType string = "Folder"
+	}
+	else {
+		resultType = "file"
 	}
 	r = ResultItem{
-		Name: info.Name(),
-		Modified: info.ModTime(),
+		Name:       info.Name(),
+		Modified:   info.ModTime(),
 		ResultType: resultType,
 	}
 	return &r
