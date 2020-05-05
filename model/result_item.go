@@ -18,8 +18,7 @@ func CreateResultItem(info os.FileInfo) *ResultItem {
 	var resultType string
 	if info.IsDir() {
 		resultType = "Folder"
-	}
-	else {
+	} else {
 		resultType = "File"
 	}
 	r = ResultItem{
