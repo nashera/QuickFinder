@@ -16,7 +16,7 @@ type ResultItem struct {
 func CreateResultItem(info os.FileInfo) *ResultItem {
 	var r ResultItem
 	if info.IsDir() {
-		resultType = "Folder"
+		var resultType = "Folder"
 	}
 	r = ResultItem{
 		Name: info.Name(),
