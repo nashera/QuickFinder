@@ -26,7 +26,8 @@ fyne.io/fyne/widget
 ## explicit
 # github.com/boltdb/bolt v1.3.1
 ## explicit
-# github.com/fsnotify/fsnotify v1.4.7
+# github.com/fsnotify/fsnotify v1.4.9
+## explicit
 github.com/fsnotify/fsnotify
 # github.com/fyne-io/mobile v0.0.1
 github.com/fyne-io/mobile/app
@@ -66,14 +67,17 @@ github.com/nfnt/resize
 ## explicit
 # github.com/srwiley/oksvg v0.0.0-20200311192757-870daf9aa564
 github.com/srwiley/oksvg
-# github.com/srwiley/rasterx v0.0.0-20181219215540-696f7edb7a7e
+# github.com/srwiley/rasterx v0.0.0-20200120212402-85cb7272f5e9
+## explicit
 github.com/srwiley/rasterx
-# golang.org/x/image v0.0.0-20190802002840-cff245a6509b
+# golang.org/x/image v0.0.0-20200430140353-33d19683fad8
+## explicit
 golang.org/x/image/colornames
 golang.org/x/image/font
 golang.org/x/image/math/fixed
 golang.org/x/image/vector
-# golang.org/x/net v0.0.0-20190620200207-3b0461eec859
+# golang.org/x/net v0.0.0-20200501053045-e0ff5e5a1de5
+## explicit
 golang.org/x/net/html
 golang.org/x/net/html/atom
 golang.org/x/net/html/charset
@@ -83,7 +87,8 @@ golang.org/x/net/html/charset
 ## explicit
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
-# golang.org/x/text v0.3.0
+# golang.org/x/text v0.3.2
+## explicit
 golang.org/x/text/encoding
 golang.org/x/text/encoding/charmap
 golang.org/x/text/encoding/htmlindex
@@ -94,6 +99,8 @@ golang.org/x/text/encoding/korean
 golang.org/x/text/encoding/simplifiedchinese
 golang.org/x/text/encoding/traditionalchinese
 golang.org/x/text/encoding/unicode
+golang.org/x/text/internal/language
+golang.org/x/text/internal/language/compact
 golang.org/x/text/internal/tag
 golang.org/x/text/internal/utf8internal
 golang.org/x/text/language

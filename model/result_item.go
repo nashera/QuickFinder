@@ -9,16 +9,19 @@ import (
 type ResultItem struct {
 	Name       string
 	ResultType string
-	Created    time.Time
 	Modified   time.Time
-	Accessed   time.Time
 	FullPath   string
 }
 
-func createResultItem(info os.FileInfo) *ResultItem {
+func CreateResultItem(info os.FileInfo) *ResultItem {
 	var r ResultItem
+	if info.IsDir() {
+		resultType = "Folder"
+	}
 	r = ResultItem{
 		Name: info.Name(),
+		Modified: info.ModTime(),
+		ResultType: resultType,
 	}
 	return &r
 }

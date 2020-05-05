@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"os"
 
-	"github.com/nashera/QuickFinder/search"
+	"github.com/nashera/QuickFinder/model"
 )
 
 // func build() {
@@ -32,7 +32,7 @@ func createDB(dbPath string) error {
 }
 
 // insertResult 插入一个搜索结果
-func insertResult(dbPath string, result search.ResultItem) error {
+func insertResult(dbPath string, result model.ResultItem) error {
 	database, _ := sql.Open("sqlite3", dbPath)
 	statement, _ := database.Prepare("INSERT INTO search_result (name) VALUES (?)")
 	_, _ = statement.Exec(result.Name)
