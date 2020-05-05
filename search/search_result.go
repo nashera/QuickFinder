@@ -10,8 +10,9 @@ import (
 // func String()
 
 func walkFunc(path string, info os.FileInfo, err error) error {
-	// fmt.Printf("%s \n", path)
-	f = model.CreateResultItem(info)
+
+	var f = model.CreateResultItem(path, info)
+	fmt.Printf("%s \n", f.FullPath)
 	fmt.Println(f.Name)
 	fmt.Println(f.ResultType)
 	return nil

@@ -13,7 +13,7 @@ type ResultItem struct {
 	FullPath   string
 }
 
-func CreateResultItem(info os.FileInfo) *ResultItem {
+func CreateResultItem(path string, info os.FileInfo) *ResultItem {
 	var r ResultItem
 	var resultType string
 	if info.IsDir() {
@@ -25,6 +25,11 @@ func CreateResultItem(info os.FileInfo) *ResultItem {
 		Name:       info.Name(),
 		Modified:   info.ModTime(),
 		ResultType: resultType,
+		FullPath, path
 	}
 	return &r
+}
+
+func String(result *ResultItem) error {
+	return nil
 }
