@@ -15,11 +15,12 @@ type ResultItem struct {
 
 func CreateResultItem(info os.FileInfo) *ResultItem {
 	var r ResultItem
+	var resultType string
 	if info.IsDir() {
-		var resultType string = "Folder"
+		resultType = "Folder"
 	}
 	else {
-		resultType = "file"
+		resultType = "File"
 	}
 	r = ResultItem{
 		Name:       info.Name(),
