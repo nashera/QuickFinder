@@ -12,6 +12,7 @@ require (
 	github.com/go-gl/glfw v0.0.0-20200420212212-258d9bec320e // indirect
 	github.com/golang/protobuf v1.4.0 // indirect
 	github.com/jmank88/nuts v0.4.0 // indirect
+	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/nightlyone/lockfile v1.0.0 // indirect
 	github.com/pelletier/go-toml v1.7.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect

@@ -2,7 +2,10 @@ package cache
 
 import (
 	"database/sql"
+	"log"
 	"os"
+
+	sqlite "github.com/mattn/go-sqlite3"
 
 	"github.com/nashera/QuickFinder/model"
 )
@@ -23,16 +26,45 @@ import (
 // 	}
 // }
 
+// Context 数据库缓存
+type Context struct {
+	db *sql.DB
+}
+
+// ConnectDB 连接数据库
+func ConnectDB(dbPath string) (*Context, string) {
+	sql.Register("sqlite3_conn", &sqlite.SQLiteDriver{})
+	db, err := sql.Open("sqlite3_conn", dbPath)
+	if err != nil {
+		return nil, err.Error()
+	}
+	if err = db.Ping(); err != nil {
+		return nil, err.Error()
+	}
+	return &cacheContext{db}, ""
+}
+
+// DBIsExisted 判断数据库是否存在
+func DBIsExisted(dbPath string) bool {
+	existed := true
+	if _, err := os.Stat(dbPath); os.IsNotExist(err) {
+		existed = false
+	}
+	return existed
+}
+
 // CreateDB 创建sqlite3数据库， 用于缓存
-func CreateDB(dbPath string) error {
-	database, _ := sql.Open("sqlite3", dbPath)
-	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS search_result (id INTEGER PRIMARY KEY, name TEXT)")
+func CreateDB(c *cacheContext) error {
+	statement, _ := c.db.Prepare("CREATE TABLE IF NOT EXISTS search_result (id INTEGER PRIMARY KEY, name TEXT)")
+	if err != nil {
+		log.Fatal(err)
+	}
 	_, _ = statement.Exec()
 	return nil
 }
 
 // InsertResult 插入一个搜索结果
-func InsertResult(dbPath string, result model.ResultItem) error {
+func InsertResult(dbPath string, result *model.ResultItem) error {
 	database, _ := sql.Open("sqlite3", dbPath)
 	statement, _ := database.Prepare("INSERT INTO search_result (name) VALUES (?)")
 	_, _ = statement.Exec(result.Name)
