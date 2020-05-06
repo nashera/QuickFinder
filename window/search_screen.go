@@ -6,6 +6,8 @@ import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/layout"
 	"fyne.io/fyne/widget"
+	"github.com/nashera/QuickFinder/cache"
+	"github.com/nashera/QuickFinder/model"
 )
 
 // func makeButtonTab() fyne.Widget {
@@ -156,15 +158,21 @@ func SearchScreen() fyne.CanvasObject {
 	entry.SetPlaceHolder("Entry")
 	// list := widget.NewHBox()
 	list2 := widget.NewVBox()
+	var results []model.ResultItem = cache.QueryResult()
+	fmt.Println(results)
 
-	for i := 1; i <= 20; i++ {
+	for i, x := range results {
 		index := i // capture
 		// list.Append(widget.NewButton(fmt.Sprintf("Button %d", index), func() {
 		// 	fmt.Println("Tapped", index)
 		// }))
-		list2.Append(widget.NewButton(fmt.Sprintf("Button %d", index), func() {
-			fmt.Println("Tapped", index)
-		}))
+		// list2.Append(widget.New(fmt.Sprintf("%s %d", x.Name, index), func() {
+		// 	fmt.Println("Tapped", index)
+		// }))
+		// list2.Append(widget.NewLabelWithStyle("一个好人"，fyne.TextAlignCenter,  fyne.TextStyle{Bold: true}))
+		fmt.Println(x.Name)
+		fmt.Println(index)
+		list2.Append(widget.NewLabel(x.Name))
 	}
 
 	// horiz := widget.NewHScrollContainer(list)
