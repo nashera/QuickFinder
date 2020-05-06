@@ -2,9 +2,9 @@ package cache
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
+	"sync"
 
 	sqlite "github.com/mattn/go-sqlite3"
 
@@ -27,23 +27,31 @@ import (
 // 	}
 // }
 
+var once sync.Once
+
+// ResultDbPath 保存结果数据库
+const ResultDbPath string = "D:/Project/QuickFinder/result.db"
+
+func init() {
+	sql.Register("sqlite3_conn", &sqlite.SQLiteDriver{})
+}
+
 // Context 数据库缓存
 type Context struct {
 	db     *sql.DB
-	dbPath string
+	DbPath string
 }
 
 // ConnectDB 连接数据库
-func ConnectDB(dbPath string) (*Context, string) {
-	sql.Register("sqlite3_conn", &sqlite.SQLiteDriver{})
+func ConnectDB(dbPath string) (*Context, error) {
 	db, err := sql.Open("sqlite3_conn", dbPath)
 	if err != nil {
-		return nil, err.Error()
+		return nil, err
 	}
 	if err = db.Ping(); err != nil {
-		return nil, err.Error()
+		return nil, err
 	}
-	return &Context{db, dbPath}, ""
+	return &Context{db, dbPath}, nil
 }
 
 // DBIsExisted 判断数据库是否存在
@@ -56,7 +64,7 @@ func DBIsExisted(dbPath string) bool {
 }
 
 // CreateDB 创建sqlite3数据库， 用于缓存
-func (c *Context) CreateDB() error {
+func CreateDB() error {
 	var sqlString = "CREATE TABLE IF NOT EXISTS search_result (" +
 		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 		"name VARCHAR(255)," +
@@ -64,17 +72,21 @@ func (c *Context) CreateDB() error {
 		"modified VARCHAR(255)," +
 		"full_path TEXT" +
 		")"
-	fmt.Println(sqlString)
-	statement, err := c.db.Prepare(sqlString)
+	if DBIsExisted(ResultDbPath) {
+		return nil
+	}
+	c, err := ConnectDB(ResultDbPath)
 	if err != nil {
 		log.Fatal(err)
 	}
+	statement, err := c.db.Prepare(sqlString)
 	_, _ = statement.Exec()
+	defer c.db.Close()
 	return nil
 }
 
 // InsertResult 插入一个搜索结果
-func (c *Context) InsertResult(item *model.ResultItem) error {
+func InsertResult(item *model.ResultItem) error {
 	var sqlString = "INSERT INTO search_result (" +
 		"name" +
 		"result_type" +
@@ -83,22 +95,32 @@ func (c *Context) InsertResult(item *model.ResultItem) error {
 		")" +
 		"VALUES" +
 		"(?, ?, ?, ?)"
+	var c *Context
+	if !DBIsExisted(ResultDbPath) {
+		CreateDB()
+	}
+	c, _ = ConnectDB(ResultDbPath)
 	statement, _ := c.db.Prepare(sqlString)
 	_, _ = statement.Exec(item.Name, item.ResultType, item.Modified, item.FullPath)
-
+	defer c.db.Close()
 	return nil
 }
 
 // QueryResult 搜索结果
-func (c *Context) QueryResult(searchPattern string) error {
+func QueryResult(searchPattern string) error {
+	if !DBIsExisted(ResultDbPath) {
+		return nil
+	}
 	var sqlString = "SELECT id, name" +
 		"FROM search_result"
+	c, _ := ConnectDB(ResultDbPath)
 	_, _ = c.db.Query(sqlString)
+	defer c.db.Close()
 	return nil
 }
 
 // DeleteDB 删除数据库
-func (c *Context) DeleteDB() error {
-	_ = os.Remove(c.dbPath)
+func DeleteDB() error {
+	_ = os.Remove(ResultDbPath)
 	return nil
 }
