@@ -29,9 +29,6 @@ import (
 
 var once sync.Once
 
-// ResultDbPath 保存结果数据库
-const ResultDbPath string = "D:/Project/QuickFinder/result.db"
-
 func init() {
 	sql.Register("sqlite3_conn", &sqlite.SQLiteDriver{})
 }
@@ -69,9 +66,9 @@ func CreateDB() error {
 		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 		"name VARCHAR(255)," +
 		"result_type VARCHAR(255)," +
-		"modified VARCHAR(255)," +
+		"modified DATETIME," +
 		"full_path TEXT" +
-		")"
+		");"
 	if DBIsExisted(ResultDbPath) {
 		return nil
 	}
@@ -88,35 +85,56 @@ func CreateDB() error {
 // InsertResult 插入一个搜索结果
 func InsertResult(item *model.ResultItem) error {
 	var sqlString = "INSERT INTO search_result (" +
-		"name" +
-		"result_type" +
-		"modified" +
+		"name, " +
+		"result_type, " +
+		"modified, " +
 		"full_path" +
-		")" +
-		"VALUES" +
-		"(?, ?, ?, ?)"
-	var c *Context
+		") " +
+		"VALUES " +
+		"(?, ?, ?, ?);"
+	// fmt.Println(sqlString)
+	// fmt.Println(item.Modified)
 	if !DBIsExisted(ResultDbPath) {
 		CreateDB()
 	}
+	var c *Context
 	c, _ = ConnectDB(ResultDbPath)
 	statement, _ := c.db.Prepare(sqlString)
-	_, _ = statement.Exec(item.Name, item.ResultType, item.Modified, item.FullPath)
+	_, _ = statement.Exec(item.Name, item.ResultType, item.Modified.Unix(), item.FullPath)
+	// _, _ = c.db.Exec(sqlString, item.Name)
 	defer c.db.Close()
 	return nil
 }
 
 // QueryResult 搜索结果
-func QueryResult(searchPattern string) error {
+func QueryResult() []model.ResultItem {
 	if !DBIsExisted(ResultDbPath) {
 		return nil
 	}
-	var sqlString = "SELECT id, name" +
+	var sqlString = "SELECT name, result_type, modified, full_path " +
 		"FROM search_result"
 	c, _ := ConnectDB(ResultDbPath)
-	_, _ = c.db.Query(sqlString)
+	rows, err := c.db.Query(sqlString)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	var results []model.ResultItem
+	for rows.Next() {
+		resultitem := model.ResultItem{}
+		err = rows.Scan(&resultitem.Name, &resultitem.ResultType, &resultitem.Modified, &resultitem.FullPath)
+		if err != nil {
+			panic(err)
+		}
+		results = append(results, resultitem)
+
+	}
+	err = rows.Err()
+	if err != nil {
+		panic(err)
+	}
 	defer c.db.Close()
-	return nil
+	return results
 }
 
 // DeleteDB 删除数据库

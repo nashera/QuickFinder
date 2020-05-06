@@ -13,6 +13,7 @@ type ResultItem struct {
 	FullPath   string
 }
 
+// CreateResultItem Constructor
 func CreateResultItem(path string, info os.FileInfo) *ResultItem {
 	var r ResultItem
 	var resultType string
@@ -30,6 +31,7 @@ func CreateResultItem(path string, info os.FileInfo) *ResultItem {
 	return &r
 }
 
+// String print resultitem
 func String(result *ResultItem) error {
 	return nil
 }
