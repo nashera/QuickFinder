@@ -62,13 +62,24 @@ func DBIsExisted(dbPath string) bool {
 
 // CreateDB 创建sqlite3数据库， 用于缓存
 func CreateDB() error {
-	var sqlString = "CREATE TABLE IF NOT EXISTS search_result (" +
-		"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-		"name VARCHAR(255)," +
-		"result_type VARCHAR(255)," +
-		"modified DATETIME," +
-		"full_path TEXT" +
-		");"
+	var sqlString = `
+	CREATE TABLE IF NOT EXISTS search_result 
+	(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name VARCHAR(255),
+		result_type VARCHAR(255),
+		modified DATETIME,
+		full_path TEXT
+	);
+	CREATE TABLE IF NOT EXISTS doctor
+	(
+		id INTEGER PRIMARY KEY AUTO INCREMENT,
+		name VARCHAR(255),
+		hospital VARCHAR(255),
+		result_id INTEGER,
+
+	);
+	`		// foreign key(result_id) references data(id)
 	if DBIsExisted(ResultDbPath) {
 		return nil
 	}
@@ -84,14 +95,16 @@ func CreateDB() error {
 
 // InsertResult 插入一个搜索结果
 func InsertResult(item *model.ResultItem) error {
-	var sqlString = "INSERT INTO search_result (" +
-		"name, " +
-		"result_type, " +
-		"modified, " +
-		"full_path" +
-		") " +
-		"VALUES " +
-		"(?, ?, ?, ?);"
+	var sqlString = `
+	INSERT INTO search_result (
+		name,
+		result_type,
+		modified,
+		full_path
+	)
+	VALUES
+	(?, ?, ?, ?);
+	`
 	// fmt.Println(sqlString)
 	// fmt.Println(item.Modified)
 	if !DBIsExisted(ResultDbPath) {
@@ -111,8 +124,9 @@ func QueryResult() []model.ResultItem {
 	if !DBIsExisted(ResultDbPath) {
 		return nil
 	}
-	var sqlString = "SELECT name, result_type, modified, full_path " +
-		"FROM search_result"
+	var sqlString = `
+	SELECT name, result_type, modified, full_path FROM search_result
+	`
 	c, _ := ConnectDB(ResultDbPath)
 	rows, err := c.db.Query(sqlString)
 	if err != nil {
