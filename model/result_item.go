@@ -1,12 +1,19 @@
 package model
 
 import (
-	"fmt"
 	"os"
 	"regexp"
 	"strings"
 	"time"
 )
+
+// Sample 样本
+type Sample struct {
+	SampleName string
+	LibName    string
+	Doctor     string
+	Hospital   string
+}
 
 // ResultItem 搜索结果
 type ResultItem struct {
@@ -19,28 +26,29 @@ type ResultItem struct {
 
 // CreateResultItem Constructor
 func CreateResultItem(path string, info os.FileInfo) *ResultItem {
-	var r ResultItem
+	var item ResultItem
 	var resultType string
 	if info.IsDir() {
 		resultType = "Folder"
 	} else {
 		resultType = "File"
 	}
-	r = ResultItem{
+	item = ResultItem{
 		Name:       info.Name(),
 		Modified:   info.ModTime(),
 		ResultType: resultType,
 		FullPath:   path,
 		Samples:    getRelatedSamples(info),
 	}
-	if r.Samples != nil {
-		fmt.Println(info.Name())
-		for _, sample := range r.Samples {
-			fmt.Println(sample.SampleName)
-		}
+	// if item.Samples != nil {
+	// 	fmt.Println(info.Name())
+	// 	for _, sample := range item.Samples {
+	// 		fmt.Println(sample)
+	// 		// fmt.Println(sample.Doctor)
+	// 	}
 
-	}
-	return &r
+	// }
+	return &item
 }
 
 // GetSampleName print resultitem

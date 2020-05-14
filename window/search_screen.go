@@ -158,7 +158,7 @@ func SearchScreen() fyne.CanvasObject {
 	entry.SetPlaceHolder("Entry")
 	// list := widget.NewHBox()
 	list2 := widget.NewVBox()
-	var results []model.ResultItem = cache.QueryResult()
+	var results []model.ResultItem = cache.QueryResult("仁济")
 	fmt.Println(results)
 
 	for i, x := range results {
